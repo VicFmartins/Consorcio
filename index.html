@@ -30,30 +30,23 @@
       font-family: 'Montserrat', sans-serif;
       font-weight: 300;
       overflow-x: hidden;
-      cursor: none;
     }
 
-    /* CURSOR */
-    .cursor {
+    
+
+
+    /* GLOW BLOB */
+    #glowBlob {
       position: fixed;
-      width: 10px; height: 10px;
-      background: var(--gold);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transition: transform 0.1s;
-      transform: translate(-50%, -50%);
-    }
-    .cursor-ring {
-      position: fixed;
-      width: 36px; height: 36px;
-      border: 1px solid var(--gold);
+      width: 340px;
+      height: 340px;
       border-radius: 50%;
       pointer-events: none;
       z-index: 9998;
       transform: translate(-50%, -50%);
-      transition: all 0.18s ease;
-      opacity: 0.6;
+      background: radial-gradient(circle, rgba(201,169,110,0.13) 0%, rgba(201,169,110,0.04) 40%, transparent 70%);
+      transition: opacity 0.3s;
+      filter: blur(8px);
     }
 
     /* NOISE OVERLAY */
@@ -619,7 +612,6 @@
       letter-spacing: 0.25em;
       text-transform: uppercase;
       padding: 18px;
-      cursor: none;
       transition: all 0.35s;
       margin-top: 10px;
       position: relative;
@@ -769,9 +761,8 @@
 </head>
 <body>
 
-  <!-- CURSOR -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
+  <!-- GLOW CURSOR -->
+  <div id="glowBlob"></div>
 
   <!-- FLOATING WHATSAPP -->
   <a href="https://wa.me/5513997444642?text=Ol%C3%A1%20Vit%C3%B3ria%2C%20tenho%20interesse%20em%20consórcio%20de%20imóvel%20de%20alto%20padrão." target="_blank" class="wpp-float" title="Falar no WhatsApp">
@@ -955,10 +946,7 @@
       </p>
       <div class="contact-item">
         <div class="contact-icon">✉</div>
-        <div class="contact-text">
-          <strong>E-mail</strong>
-          <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7a0c130e1508131b541c081f130e1b093a1c1314191b0a130e1b1654141f0e">[email&#160;protected]</a>
-        </div>
+        <div class="contact-text"><strong>E-mail</strong><span id="em1"></span></div>
       </div>
       <div class="contact-item">
         <div class="contact-icon">↗</div>
@@ -981,7 +969,7 @@
         <div class="form-title">Quero minha proposta</div>
         <div class="form-sub">Retorno em até 2 horas úteis</div>
         <form id="leadForm">
-          <!-- Web3Forms access key - você recebe os leads no email vitoria.freitas@fincapital.net -->
+          <!-- Web3Forms access key - você recebe os leads no email <span id="em2"></span> -->
           <input type="hidden" name="access_key" value="8a73f551-83b2-4447-a15b-15a0b060f9a4" />
           <input type="hidden" name="subject" value="🏠 Novo Lead — Consórcio de Imóvel | FinCapital" />
           <input type="hidden" name="from_name" value="FinCapital Landing Page" />
@@ -1049,21 +1037,26 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-logo">Fin<span>Capital</span></div>
-    <div class="footer-text"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="36405f4259445f57185044535f42574576505f585557465f42575a18585342">[email&#160;protected]</a> &nbsp;·&nbsp; (13) 99744-4642</div>
+    <div class="footer-text"><span id="em2"></span> &nbsp;·&nbsp; (13) 99744-4642</div>
     <div class="footer-copy">© 2025 FinCapital — Todos os direitos reservados</div>
   </footer>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // CURSOR
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
-    function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animRing); }
-    animRing();
-    document.querySelectorAll('a, button, .brand-pill').forEach(el => {
-      el.addEventListener('mouseenter', () => { ring.style.transform = 'translate(-50%,-50%) scale(1.8)'; ring.style.opacity = '1'; });
-      el.addEventListener('mouseleave', () => { ring.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.opacity = '0.6'; });
+    // GLOW BLOB
+    const blob = document.getElementById('glowBlob');
+    let bx = 0, by = 0, tx = 0, ty = 0;
+    document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+    function animBlob() {
+      bx += (tx - bx) * 0.08;
+      by += (ty - by) * 0.08;
+      blob.style.left = bx + 'px';
+      blob.style.top = by + 'px';
+      requestAnimationFrame(animBlob);
+    }
+    animBlob();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => { blob.style.width='480px'; blob.style.height='480px'; blob.style.background='radial-gradient(circle, rgba(201,169,110,0.18) 0%, rgba(201,169,110,0.05) 40%, transparent 70%)'; });
+      el.addEventListener('mouseleave', () => { blob.style.width='340px'; blob.style.height='340px'; blob.style.background='radial-gradient(circle, rgba(201,169,110,0.13) 0%, rgba(201,169,110,0.04) 40%, transparent 70%)'; });
     });
 
     // NAV SCROLL
