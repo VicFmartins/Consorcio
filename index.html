@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinCapital | Consórcio de Imóveis de Alto Padrão</title>
+  <meta name="description" content="Adquira o imóvel dos seus sonhos com inteligência. Consórcio de alto padrão sem juros, com as melhores administradoras do mercado." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #080808;
+      --white: #f5f3ef;
+      --gold: #c9a96e;
+      --gold-light: #e8d5a8;
+      --gray: #1a1a1a;
+      --gray-mid: #333;
+      --gray-light: #888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* CURSOR */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all 0.18s ease;
+      opacity: 0.6;
+    }
+
+    /* NOISE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9997;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 60px;
+      background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+      transition: padding 0.4s;
+    }
+    nav.scrolled { padding: 18px 60px; background: rgba(8,8,8,0.97); }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-cta {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 10px 24px;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--black); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 60px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 70% 50%, rgba(201,169,110,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 80% at 90% 20%, rgba(201,169,110,0.04) 0%, transparent 60%),
+        var(--black);
+    }
+    .hero-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,169,110,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,169,110,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 36px;
+      opacity: 1;
+      transform: translateY(20px);
+      animation: fadeUp 0.9s 0.3s forwards;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 40px; height: 1px;
+      background: var(--gold);
+    }
+    .hero-h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 6vw, 6rem);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin-bottom: 32px;
+      opacity: 1;
+      /* no initial transform */
+      animation: fadeUp 1.1s 0.5s forwards;
+    }
+    .hero-h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--gray-light);
+      max-width: 480px;
+      margin-bottom: 52px;
+      opacity: 1;
+      transform: translateY(20px);
+      animation: fadeUp 1s 0.7s forwards;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      opacity: 1;
+      transform: translateY(20px);
+      animation: fadeUp 1s 0.9s forwards;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--gold);
+      color: var(--black);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 18px 36px;
+      text-decoration: none;
+      transition: all 0.35s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--white);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .btn-primary:hover::after { transform: scaleX(1); }
+    .btn-primary span { position: relative; z-index: 1; }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.3s;
+    }
+    .btn-secondary:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* SCROLL INDICATOR */
+    .scroll-ind {
+      position: absolute;
+      bottom: 40px; left: 60px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      opacity: 1;
+      animation: fadeUp 1s 1.4s forwards;
+    }
+    .scroll-line {
+      width: 48px; height: 1px;
+      background: var(--gray-mid);
+      position: relative;
+      overflow: hidden;
+    }
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: var(--gold);
+      animation: scrollAnim 2s 1.6s infinite;
+    }
+
+    .hero-number {
+      position: absolute;
+      right: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: right;
+      opacity: 1;
+      animation: fadeUp 1s 1s forwards;
+    }
+    .hero-number .big-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13rem;
+      font-weight: 300;
+      line-height: 1;
+      color: rgba(255,255,255,0.03);
+      letter-spacing: -0.05em;
+      user-select: none;
+    }
+    .hero-stat {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    /* MARQUEE */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 18px 0;
+      background: rgba(255,255,255,0.015);
+    }
+    .marquee {
+      display: flex;
+      gap: 0;
+      animation: marquee 22s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 32px;
+      padding: 0 40px;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+    }
+    .marquee-dot { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; }
+
+    /* STATS */
+    .stats {
+      padding: 100px 60px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: rgba(255,255,255,0.04);
+    }
+    .stat-box {
+      padding: 50px 40px;
+      background: var(--black);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: border-color 0.3s;
+      opacity: 1;
+      /* no initial transform */
+    }
+    .stat-box:hover { border-color: var(--gold); }
+    .stat-box.visible {  }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.8rem;
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .stat-num span { color: var(--gold); }
+    .stat-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      line-height: 1.6;
+    }
+
+    /* WHY */
+    .why {
+      padding: 120px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+    .why-left .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+    .why-left .section-tag::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+    .section-h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 28px;
+    }
+    .section-h2 em { font-style: italic; color: var(--gold); }
+    .section-p {
+      font-size: 0.88rem;
+      line-height: 2;
+      color: var(--gray-light);
+      margin-bottom: 20px;
+    }
+
+    .why-right {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .why-card {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      padding: 32px 36px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.4s;
+      opacity: 1;
+      /* no initial transform */
+    }
+    .why-card.visible {  }
+    .why-card:hover {
+      background: rgba(201,169,110,0.04);
+      border-color: rgba(201,169,110,0.3);
+      transform: translateX(-4px) !important;
+    }
+    .why-icon {
+      width: 44px; height: 44px;
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+      color: var(--gold);
+    }
+    .why-card-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      color: var(--white);
+    }
+    .why-card-text {
+      font-size: 0.82rem;
+      line-height: 1.8;
+      color: var(--gray-light);
+    }
+
+    /* HOW IT WORKS */
+    .how {
+      padding: 120px 60px;
+      background: rgba(255,255,255,0.015);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .how-header { text-align: center; margin-bottom: 80px; }
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      position: relative;
+    }
+    .how-step {
+      padding: 48px 36px;
+      background: var(--black);
+      border: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+      transition: all 0.4s;
+      opacity: 1;
+      /* no initial transform */
+    }
+    .how-step.visible {  }
+    .how-step:hover { border-color: var(--gold); }
+    .step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      font-weight: 300;
+      color: rgba(201,169,110,0.12);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+    .step-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      color: var(--white);
+    }
+    .step-text {
+      font-size: 0.82rem;
+      line-height: 1.9;
+      color: var(--gray-light);
+    }
+    .step-connector {
+      position: absolute;
+      top: 50%;
+      right: -1px;
+      width: 20px; height: 1px;
+      background: var(--gold);
+      z-index: 2;
+    }
+
+    /* BRANDS */
+    .brands {
+      padding: 80px 60px;
+      text-align: center;
+    }
+    .brands-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      margin-bottom: 48px;
+    }
+    .brands-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+    }
+    .brand-pill {
+      padding: 10px 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      transition: all 0.3s;
+    }
+    .brand-pill:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* LEAD FORM */
+    .lead {
+      padding: 120px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: start;
+    }
+    .lead-left { padding-top: 10px; }
+    .lead-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.3;
+      color: var(--white);
+      margin-bottom: 36px;
+    }
+    .lead-quote .gold { color: var(--gold); }
+    .lead-desc {
+      font-size: 0.85rem;
+      line-height: 1.9;
+      color: var(--gray-light);
+      margin-bottom: 48px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .contact-icon {
+      width: 40px; height: 40px;
+      border: 1px solid rgba(201,169,110,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .contact-text { font-size: 0.82rem; color: var(--gray-light); line-height: 1.5; }
+    .contact-text strong { color: var(--white); font-weight: 500; display: block; font-size: 0.78rem; letter-spacing: 0.05em; }
+
+    /* FORM */
+    .form-wrap {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 56px 48px;
+      position: relative;
+    }
+    .form-wrap::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+    .form-sub {
+      font-size: 0.78rem;
+      color: var(--gray-light);
+      margin-bottom: 36px;
+      letter-spacing: 0.05em;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      margin-bottom: 10px;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      padding: 14px 18px;
+      outline: none;
+      transition: border-color 0.3s;
+      appearance: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--gold);
+    }
+    .form-select option { background: var(--black); }
+    .form-textarea { resize: none; min-height: 100px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 18px;
+      cursor: none;
+      transition: all 0.35s;
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .form-submit::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.15);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s;
+    }
+    .form-submit:hover::after { transform: scaleX(1); }
+    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .form-success.show { display: block; }
+    .success-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 10px;
+      color: var(--gold);
+    }
+    .success-text { font-size: 0.82rem; color: var(--gray-light); line-height: 1.8; }
+
+    .wpp-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px solid rgba(37,211,102,0.3);
+      color: #25d366;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .wpp-btn:hover { background: rgba(37,211,102,0.08); border-color: #25d366; }
+
+    /* FOOTER */
+    footer {
+      padding: 60px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--white);
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-text {
+      font-size: 0.72rem;
+      color: var(--gray-light);
+      letter-spacing: 0.05em;
+    }
+    .footer-copy {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.1em;
+    }
+
+    /* FLOATING WPP */
+    .wpp-float {
+      position: fixed;
+      bottom: 32px; right: 32px;
+      z-index: 500;
+      width: 56px; height: 56px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 24px rgba(37,211,102,0.35);
+      animation: pulseWpp 2.5s infinite;
+      transition: transform 0.3s;
+    }
+    .wpp-float:hover { transform: scale(1.1); }
+    .wpp-float svg { width: 26px; height: 26px; fill: white; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeRight {
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes scrollAnim {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+    @keyframes pulseWpp {
+      0%, 100% { box-shadow: 0 4px 24px rgba(37,211,102,0.35); }
+      50% { box-shadow: 0 4px 40px rgba(37,211,102,0.55), 0 0 0 10px rgba(37,211,102,0.08); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav { padding: 24px 32px; }
+      .hero { padding: 120px 32px 80px; }
+      .hero-number { display: none; }
+      .stats { grid-template-columns: repeat(2, 1fr); padding: 60px 32px; }
+      .why { grid-template-columns: 1fr; gap: 60px; padding: 80px 32px; }
+      .how { padding: 80px 32px; }
+      .how-steps { grid-template-columns: repeat(2, 1fr); }
+      .lead { grid-template-columns: 1fr; gap: 60px; padding: 80px 32px; }
+      .brands { padding: 60px 32px; }
+      footer { padding: 40px 32px; }
+      .scroll-ind { left: 32px; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 20px 20px; }
+      .hero { padding: 110px 20px 70px; }
+      .stats { grid-template-columns: 1fr 1fr; padding: 40px 20px; }
+      .stat-box { padding: 32px 24px; }
+      .how-steps { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-wrap { padding: 36px 24px; }
+      footer { padding: 32px 20px; flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- FLOATING WHATSAPP -->
+  <a href="https://wa.me/5513997444642?text=Ol%C3%A1%20Vit%C3%B3ria%2C%20tenho%20interesse%20em%20consórcio%20de%20imóvel%20de%20alto%20padrão." target="_blank" class="wpp-float" title="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">Fin<span>Capital</span></a>
+    <a href="#contato" class="nav-cta">Falar com Especialista</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-lines"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Consórcio de Alto Padrão</div>
+      <h1 class="hero-h1">
+        O caminho mais <em>inteligente</em><br>para o imóvel<br>que você merece
+      </h1>
+      <p class="hero-sub">
+        Acesso às melhores administradoras do mercado, sem juros, com total liberdade de escolha. Consultoria personalizada para patrimônio que vai muito além do comum.
+      </p>
+      <div class="hero-actions">
+        <a href="#contato" class="btn-primary"><span>Quero minha proposta</span></a>
+        <a href="#como-funciona" class="btn-secondary">Como funciona →</a>
+      </div>
+    </div>
+    <div class="hero-number">
+      <div class="big-num">R$</div>
+    </div>
+    <div class="scroll-ind">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee">
+      <div class="marquee-item"><span class="marquee-dot"></span> Sem juros abusivos <span class="marquee-dot"></span> Múltiplas administradoras <span class="marquee-dot"></span> Cartas de crédito até R$ 5 milhões <span class="marquee-dot"></span> Imóveis residenciais e comerciais <span class="marquee-dot"></span> Terrenos e empreendimentos <span class="marquee-dot"></span> Atendimento exclusivo <span class="marquee-dot"></span> Consultoria personalizada</div>
+      <div class="marquee-item"><span class="marquee-dot"></span> Sem juros abusivos <span class="marquee-dot"></span> Múltiplas administradoras <span class="marquee-dot"></span> Cartas de crédito até R$ 5 milhões <span class="marquee-dot"></span> Imóveis residenciais e comerciais <span class="marquee-dot"></span> Terrenos e empreendimentos <span class="marquee-dot"></span> Atendimento exclusivo <span class="marquee-dot"></span> Consultoria personalizada</div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats" id="numeros">
+    <div class="stat-box">
+      <div class="stat-num">15+</div>
+      <div class="stat-label">Administradoras<br>parceiras</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">R$500M</div>
+      <div class="stat-label">Em cartas de crédito<br>disponíveis</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">98%</div>
+      <div class="stat-label">Taxa de satisfação<br>dos clientes</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">1.200+</div>
+      <div class="stat-label">Clientes<br>contemplados</div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="why" id="vantagens">
+    <div class="why-left">
+      <div class="section-tag">Por que consórcio?</div>
+      <h2 class="section-h2">A forma mais <em>rentável</em> de construir patrimônio</h2>
+      <p class="section-p">Enquanto o financiamento cobra juros que podem dobrar o valor do imóvel, o consórcio trabalha a seu favor — você paga apenas taxa de administração e constrói patrimônio real.</p>
+      <p class="section-p">Com acesso a múltiplas administradoras, encontramos a melhor condição para o seu perfil, seja para imóvel residencial, comercial, terreno ou empreendimento.</p>
+    </div>
+    <div class="why-right">
+      <div class="why-card">
+        <div class="why-icon">◈</div>
+        <div>
+          <div class="why-card-title">Zero juros</div>
+          <div class="why-card-text">Pague apenas a taxa de administração, sem os juros abusivos do financiamento tradicional. Economia real no longo prazo.</div>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">◈</div>
+        <div>
+          <div class="why-card-title">Múltiplas opções</div>
+          <div class="why-card-text">Trabalhamos com as principais administradoras do Brasil. Você não fica limitado a uma única opção — escolhemos a melhor para você.</div>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">◈</div>
+        <div>
+          <div class="why-card-title">Carta de crédito livre</div>
+          <div class="why-card-text">Use sua carta em qualquer imóvel aprovado pela administradora — novo, usado, na planta ou terreno. Liberdade total de escolha.</div>
+        </div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">◈</div>
+        <div>
+          <div class="why-card-title">Lance & antecipação</div>
+          <div class="why-card-text">Estratégias de lance para acelerar a contemplação. Assessoria completa em como aumentar suas chances.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="como-funciona">
+    <div class="how-header">
+      <div class="section-tag" style="display:inline-flex;align-items:center;gap:10px;font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;"><span style="display:block;width:30px;height:1px;background:var(--gold)"></span>Processo</div>
+      <h2 class="section-h2">Como <em>funciona</em></h2>
+    </div>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-num">01</div>
+        <div class="step-title">Consulta inicial</div>
+        <div class="step-text">Conversamos sobre seu objetivo, perfil financeiro e prazo desejado. Sem compromisso, sem pressão.</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">02</div>
+        <div class="step-title">Simulação personalizada</div>
+        <div class="step-text">Apresentamos as melhores opções das administradoras parceiras, com parcelas e prazos ajustados ao seu bolso.</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">03</div>
+        <div class="step-title">Adesão & grupo</div>
+        <div class="step-text">Você entra no consórcio, começa a pagar as parcelas e participa das assembleias mensais de contemplação.</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">04</div>
+        <div class="step-title">Contemplação</div>
+        <div class="step-text">Ao ser contemplado por sorteio ou lance, você recebe sua carta de crédito e escolhe o imóvel dos seus sonhos.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRANDS -->
+  <section class="brands">
+    <div class="brands-label">Administradoras parceiras</div>
+    <div class="brands-grid">
+      <div class="brand-pill">Porto</div>
+      <div class="brand-pill">Admicon</div>
+      <div class="brand-pill">Mapfre</div>
+      <div class="brand-pill">Rodobens</div>
+      <div class="brand-pill">Embracon</div>
+    </div>
+
+    <div style="margin-top:64px;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:900px;margin-left:auto;margin-right:auto;">
+      <div style="padding:36px 32px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);text-align:left;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--gold);margin-bottom:16px;line-height:1;">½</div>
+        <div style="font-size:0.78rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);margin-bottom:10px;">Meia Parcela</div>
+        <div style="font-size:0.8rem;line-height:1.8;color:var(--gray-light);">Quer entrar pagando menos? Temos planos com meia parcela — você mesmo decide quando pagar o valor integral.</div>
+      </div>
+      <div style="padding:36px 32px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);text-align:left;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--gold);margin-bottom:16px;line-height:1;">✦</div>
+        <div style="font-size:0.78rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);margin-bottom:10px;">Cartas Contempladas</div>
+        <div style="font-size:0.8rem;line-height:1.8;color:var(--gray-light);">Precisa do crédito agora? Negociamos cartas já contempladas — use o imóvel em semanas, não anos.</div>
+      </div>
+      <div style="padding:36px 32px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);text-align:left;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--gold);margin-bottom:16px;line-height:1;">◈</div>
+        <div style="font-size:0.78rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);margin-bottom:10px;">Assessoria Completa</div>
+        <div style="font-size:0.8rem;line-height:1.8;color:var(--gray-light);">Do primeiro contato até a entrega das chaves. Cuidamos de todo o processo com agilidade e transparência.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEAD FORM -->
+  <section class="lead" id="contato">
+    <div class="lead-left">
+      <div class="section-tag" style="display:inline-flex;align-items:center;gap:10px;font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;"><span style="display:block;width:30px;height:1px;background:var(--gold)"></span>Fale com a especialista</div>
+      <div class="lead-quote">
+        "Cada cliente merece uma solução <span class="gold">única</span>, não um produto de prateleira."
+      </div>
+      <p class="lead-desc">
+        Vitória Freitas, consultora especializada em consórcio de imóveis de alto padrão, com acesso exclusivo às melhores condições do mercado. Atendimento personalizado, sem compromisso.
+      </p>
+      <div class="contact-item">
+        <div class="contact-icon">✉</div>
+        <div class="contact-text">
+          <strong>E-mail</strong>
+          <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7a0c130e1508131b541c081f130e1b093a1c1314191b0a130e1b1654141f0e">[email&#160;protected]</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">↗</div>
+        <div class="contact-text">
+          <strong>WhatsApp</strong>
+          (13) 99744-4642
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">◈</div>
+        <div class="contact-text">
+          <strong>Especialidade</strong>
+          Imóveis e Automóveis — Alto Padrão
+        </div>
+      </div>
+    </div>
+
+    <div class="form-wrap">
+      <div id="formContent">
+        <div class="form-title">Quero minha proposta</div>
+        <div class="form-sub">Retorno em até 2 horas úteis</div>
+        <form id="leadForm">
+          <!-- Web3Forms access key - você recebe os leads no email vitoria.freitas@fincapital.net -->
+          <input type="hidden" name="access_key" value="8a73f551-83b2-4447-a15b-15a0b060f9a4" />
+          <input type="hidden" name="subject" value="🏠 Novo Lead — Consórcio de Imóvel | FinCapital" />
+          <input type="hidden" name="from_name" value="FinCapital Landing Page" />
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nome completo *</label>
+              <input type="text" name="name" class="form-input" placeholder="Seu nome" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Telefone / WhatsApp *</label>
+              <input type="tel" name="phone" class="form-input" placeholder="(00) 00000-0000" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">E-mail</label>
+            <input type="email" name="email" class="form-input" placeholder="seu@email.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Valor do imóvel desejado *</label>
+            <select name="valor" class="form-select form-input" required>
+              <option value="" disabled selected>Selecione uma faixa</option>
+              <option value="300-500k">R$ 300 mil – R$ 500 mil</option>
+              <option value="500k-1M">R$ 500 mil – R$ 1 milhão</option>
+              <option value="1M-2M">R$ 1 milhão – R$ 2 milhões</option>
+              <option value="2M-5M">R$ 2 milhões – R$ 5 milhões</option>
+              <option value="acima5M">Acima de R$ 5 milhões</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tipo de imóvel</label>
+            <select name="tipo" class="form-select form-input">
+              <option value="" disabled selected>Selecione</option>
+              <option value="residencial">Residencial</option>
+              <option value="comercial">Comercial</option>
+              <option value="terreno">Terreno</option>
+              <option value="empreendimento">Empreendimento / Investimento</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mensagem (opcional)</label>
+            <textarea name="message" class="form-textarea form-input" placeholder="Conte mais sobre o que você procura..."></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="submitBtn">
+            Solicitar proposta personalizada
+          </button>
+        </form>
+        <a href="https://wa.me/5513997444642?text=Ol%C3%A1%20Vit%C3%B3ria%2C%20tenho%20interesse%20em%20consórcio%20de%20imóvel%20de%20alto%20padrão." target="_blank" class="wpp-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Ou fale direto pelo WhatsApp
+        </a>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">✦</div>
+        <div class="success-title">Recebemos sua solicitação</div>
+        <div class="success-text">Vitória entrará em contato em breve com sua proposta personalizada.<br><br>Enquanto isso, que tal falar direto pelo WhatsApp?</div>
+        <a href="https://wa.me/5513997444642?text=Ol%C3%A1%20Vit%C3%B3ria%2C%20acabei%20de%20preencher%20o%20formulário%20no%20site.%20Quero%20saber%20mais%20sobre%20consórcio%20de%20imóvel." target="_blank" class="wpp-btn" style="margin-top:28px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Falar com Vitória agora
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Fin<span>Capital</span></div>
+    <div class="footer-text"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="36405f4259445f57185044535f42574576505f585557465f42575a18585342">[email&#160;protected]</a> &nbsp;·&nbsp; (13) 99744-4642</div>
+    <div class="footer-copy">© 2025 FinCapital — Todos os direitos reservados</div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // CURSOR
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+    function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(animRing); }
+    animRing();
+    document.querySelectorAll('a, button, .brand-pill').forEach(el => {
+      el.addEventListener('mouseenter', () => { ring.style.transform = 'translate(-50%,-50%) scale(1.8)'; ring.style.opacity = '1'; });
+      el.addEventListener('mouseleave', () => { ring.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.opacity = '0.6'; });
+    });
+
+    // NAV SCROLL
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // SCROLL OBSERVER
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const delay = el.dataset.delay || 0;
+          setTimeout(() => el.classList.add('visible'), delay * 1000);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.stat-box, .why-card, .how-step').forEach((el, i) => {
+      el.dataset.delay = (i % 4) * 0.12;
+      observer.observe(el);
+    });
+
+    // COUNTER ANIMATION
+    function countUp(el, target, duration = 1800, prefix = '') {
+      let start = 0;
+      const step = target / (duration / 16);
+      const timer = setInterval(() => {
+        start = Math.min(start + step, target);
+        el.textContent = Math.round(start);
+        if (start >= target) clearInterval(timer);
+      }, 16);
+    }
+
+    // Run counters after short delay (no scroll dependency)
+    setTimeout(() => {
+      countUp(document.getElementById('c1'), 15);
+      countUp(document.getElementById('c2'), 500);
+      countUp(document.getElementById('c3'), 98);
+      countUp(document.getElementById('c4'), 1200);
+    }, 800);
+
+    // FORM SUBMIT — WEB3FORMS
+    document.getElementById('leadForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+
+      const data = new FormData(this);
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: data
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          document.getElementById('formContent').style.display = 'none';
+          document.getElementById('formSuccess').classList.add('show');
+        } else {
+          throw new Error('Erro no envio');
+        }
+      } catch(err) {
+        btn.disabled = false;
+        btn.textContent = 'Erro. Tente novamente.';
+        setTimeout(() => btn.textContent = 'Solicitar proposta p
